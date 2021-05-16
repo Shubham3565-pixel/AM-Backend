@@ -8,7 +8,6 @@ function formatDateTime(data){
         i.time=time;
         delete i.datetime;
         data1.push({
-            id:i.id,
             data:i.date,
             time:i.time,
             debit:i.debit,

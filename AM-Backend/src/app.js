@@ -4,13 +4,14 @@ const cors = require("cors");
 const db =require('./config/db');
 const getTotalBalance = require('./models/getTotalBalance');
 const formatDateTime = require('./models/formatDateTime');
+const port=8000;
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 
-app.listen(8000, () => {
+app.listen(port, () => {
   console.log(`Server is running.`);
 });
 
@@ -35,14 +36,13 @@ app.post("/senddata", async (req, res) => {
 
 app.get("/getdata", (req, res) => {
   db.query(
-    "SELECT id, datetime, debit, credit, totalbalance, description FROM transaction",
+    "SELECT datetime, debit, credit, totalbalance, description FROM transaction",
     [],
     async (error, results) => {
       if (error) {
         throw error;
       }
       result=await formatDateTime(results.rows)
-      console.log(result);
       await res.status(200).json(result.reverse());
     }
   );
